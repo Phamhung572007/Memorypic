@@ -15,7 +15,7 @@ Trong MongoDB Compass:
 4. Vao tung collection > `Add Data` > `Import JSON or CSV file` > chon file JSON tu `mongo-import`.
 5. Chon dinh dang `JSON`, roi import.
 
-Sau khi import xong, sua `backend\.env`:
+Sau khi import local xong, sua `backend\.env`:
 
 ```env
 STORAGE_MODE=mongodb
@@ -35,4 +35,10 @@ Neu muon tao lai bo file import sau khi web da co du lieu moi:
 ```bash
 cd C:\Memorypic\backend
 npm run prepare:mongo-import
+```
+
+Neu muon dua du lieu len MongoDB Atlas de nguoi khac vao web van thay du lieu, xem:
+
+```txt
+C:\Memorypic\MONGODB_ATLAS.md
 ```
