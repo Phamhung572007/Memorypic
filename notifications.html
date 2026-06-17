@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemoryPic – Thông báo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="notifications.css">
+  <link rel="stylesheet" href="account-menu.css">
+</head>
+<body>
+<nav class="sidebar">
+  <button class="logo-btn" data-href="landing.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button>
+  <a href="index.html" class="nav-a"><i class="fas fa-home"></i></a>
+  <a href="explore.html" class="nav-a"><i class="fas fa-compass"></i></a>
+  <a href="create.html" class="nav-a"><i class="fas fa-plus-circle"></i></a>
+  <a href="messages.html" class="nav-a"><i class="fas fa-comment-dots"></i></a>
+  <a href="notifications.html" class="nav-a on"><i class="fas fa-bell"></i></a>
+  <div class="spacer"></div>
+  <a href="#" class="nav-a"><i class="fas fa-cog"></i></a>
+  <div class="side-avatar">MP</div>
+</nav>
+
+<header class="header">
+  <h1>Thông báo</h1>
+  <div class="header-actions">
+    <button class="btn-sm" data-action="mark-all-read">Đánh dấu đã đọc</button>
+    <button class="btn-sm"><i class="fas fa-cog"></i></button>
+  </div>
+</header>
+
+<main class="main" id="mainContent"></main>
+<script src="api-service.js"></script>
+<script src="data-manager.js"></script>
+<script src="notifications.js"></script>
+</body>
+</html>

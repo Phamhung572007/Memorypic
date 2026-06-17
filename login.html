@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemoryPic – Đăng nhập</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<!-- LEFT -->
+<div class="panel-left">
+  <div class="panel-mosaic">
+    <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1499002238440-d264edd596ec?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+    <img src="https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=200&h=200&q=60" alt="">
+  </div>
+  <div class="panel-gradient"></div>
+  <div class="panel-content">
+    <a href="landing.html" class="panel-logo">Memory<em>Pic</em></a>
+    <div class="panel-tagline">Mọi khoảnh khắc<br>đều đáng nhớ</div>
+    <p class="panel-sub">Hàng triệu ảnh cảm hứng đang chờ bạn khám phá</p>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="panel-right" id="panel-right">
+
+  <!-- LOGIN FORM -->
+  <div id="login-form">
+    <a href="landing.html" class="back-link">← Quay lại</a>
+    <h2 class="form-title">Chào mừng trở lại 👋</h2>
+    <p class="form-sub">Chưa có tài khoản? <a href="#" data-auth-view="signup">Đăng ký miễn phí</a></p>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="email@example.com">
+    </div>
+    <div class="form-group">
+      <label>Mật khẩu</label>
+      <input type="password" placeholder="••••••••">
+    </div>
+
+    <div class="forgot"><a href="#">Quên mật khẩu?</a></div>
+
+    <button class="btn-submit">Đăng nhập</button>
+
+    <div class="divider">hoặc</div>
+
+    <button class="btn-google">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Tiếp tục với Google
+    </button>
+
+    <p class="terms">Bằng cách đăng nhập, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của chúng tôi.</p>
+  </div>
+
+  <!-- SIGNUP FORM -->
+  <div id="signup-form" class="is-hidden">
+    <a href="#" data-auth-view="login" class="back-link">← Quay lại đăng nhập</a>
+    <h2 class="form-title">Tạo tài khoản ✨</h2>
+    <p class="form-sub">Đã có tài khoản? <a href="#" data-auth-view="login">Đăng nhập</a></p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Họ</label>
+        <input type="text" placeholder="Nguyễn">
+      </div>
+      <div class="form-group">
+        <label>Tên</label>
+        <input type="text" placeholder="Văn A">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="email@example.com">
+    </div>
+    <div class="form-group">
+      <label>Số điện thoại</label>
+      <input type="tel" placeholder="09x xxx xxxx">
+    </div>
+    <div class="form-group">
+      <label>Ngày sinh</label>
+      <input type="date">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Mật khẩu</label>
+        <input type="password" placeholder="••••••••">
+      </div>
+      <div class="form-group">
+        <label>Xác nhận</label>
+        <input type="password" placeholder="••••••••">
+      </div>
+    </div>
+
+    <button class="btn-submit">Tạo tài khoản</button>
+
+    <div class="divider">hoặc</div>
+
+    <button class="btn-google">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.29-8.16 2.29-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Tiếp tục với Google
+    </button>
+
+    <p class="terms">Bằng cách đăng ký, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của chúng tôi.</p>
+  </div>
+
+</div>
+<script src="api-service.js"></script>
+<script src="data-manager.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

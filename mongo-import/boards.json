@@ -1,0 +1,122 @@
+[
+  {
+    "_id": {
+      "$oid": "66b000000000000000000001"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000001"
+    },
+    "name": "Nội thất yêu thích",
+    "description": "Board Nội thất yêu thích",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000002"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000001"
+    },
+    "name": "Du lịch mơ ước",
+    "description": "Board Du lịch mơ ước",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000003"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000001"
+    },
+    "name": "Công thức nấu ăn",
+    "description": "Board Công thức nấu ăn",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000004"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000002"
+    },
+    "name": "Scandinavian Design",
+    "description": "Board Scandinavian Design",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000005"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000002"
+    },
+    "name": "Color Palette Ideas",
+    "description": "Board Color Palette Ideas",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000006"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000003"
+    },
+    "name": "Healthy Recipes",
+    "description": "Board Healthy Recipes",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000007"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000003"
+    },
+    "name": "Vietnamese Cuisine",
+    "description": "Board Vietnamese Cuisine",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000008"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000004"
+    },
+    "name": "Southeast Asia",
+    "description": "Board Southeast Asia",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000009"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000004"
+    },
+    "name": "Photography Tips",
+    "description": "Board Photography Tips",
+    "cover_image": null,
+    "is_private": false
+  },
+  {
+    "_id": {
+      "$oid": "66b000000000000000000010"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000005"
+    },
+    "name": "Yoga Poses",
+    "description": "Board Yoga Poses",
+    "cover_image": null,
+    "is_private": false
+  }
+]

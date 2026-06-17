@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemoryPic – Tin nhắn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="messages.css">
+  <link rel="stylesheet" href="account-menu.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <button class="logo-btn" data-href="landing.html">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+  </button>
+  <a href="index.html" class="nav-a"><i class="fas fa-home"></i></a>
+  <a href="explore.html" class="nav-a"><i class="fas fa-compass"></i></a>
+  <a href="create.html" class="nav-a"><i class="fas fa-plus-circle"></i></a>
+  <a href="messages.html" class="nav-a on"><i class="fas fa-comment-dots"></i></a>
+  <a href="notifications.html" class="nav-a"><i class="fas fa-bell"></i></a>
+  <div class="spacer"></div>
+  <a href="#" class="nav-a"><i class="fas fa-cog"></i></a>
+  <div class="side-avatar">MP</div>
+</nav>
+
+<div class="msg-layout">
+  <!-- CONV LIST -->
+  <div class="conv-list">
+    <div class="conv-header">
+      <div class="conv-title-row">
+        <h2>Tin nhắn</h2>
+        <button class="new-chat-btn" data-action="toggle-new-chat"><i class="fas fa-pen"></i></button>
+      </div>
+      <div class="conv-search"><i class="fas fa-search"></i><input placeholder="Tìm kiếm cuộc trò chuyện..."></div>
+      <div class="new-chat-panel" id="newChatPanel">
+        <input id="userSearch" placeholder="Tìm người dùng...">
+        <div class="user-results" id="userResults"></div>
+      </div>
+    </div>
+    <div class="conv-tabs">
+      <div class="ctab on" data-filter="all">Tất cả</div>
+      <div class="ctab" data-filter="unread">Chưa đọc</div>
+      <div class="ctab" data-filter="empty">Chưa nhận</div>
+    </div>
+    <div class="conv-items" id="convList"></div>
+  </div>
+
+  <!-- CHAT AREA -->
+  <div class="chat-area" id="chatArea">
+    <div class="chat-header">
+      <div class="chat-av"><img id="chatAvatar" src="" alt=""></div>
+      <div>
+        <div class="chat-name" id="chatName">–</div>
+        <div class="chat-status" id="chatStatus">Đang hoạt động</div>
+      </div>
+      <div class="chat-actions">
+        <button class="chat-btn"><i class="fas fa-phone"></i></button>
+        <button class="chat-btn"><i class="fas fa-video"></i></button>
+        <button class="chat-btn"><i class="fas fa-ellipsis-v"></i></button>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-bar">
+      <div class="input-actions">
+        <button class="ia-btn"><i class="fas fa-image"></i></button>
+        <button class="ia-btn"><i class="fas fa-thumbtack"></i></button>
+        <button class="ia-btn"><i class="fas fa-smile"></i></button>
+      </div>
+      <input class="chat-inp" id="chatInp" placeholder="Nhập tin nhắn…">
+      <button class="send-btn" data-action="send-message"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+</div>
+<script src="api-service.js"></script>
+<script src="data-manager.js"></script>
+<script src="messages.js"></script>
+</body>
+</html>

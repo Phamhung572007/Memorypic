@@ -1,0 +1,66 @@
+[
+  {
+    "_id": {
+      "$oid": "db4d40fcb596ea7738005d98"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000001"
+    },
+    "refresh_token_hash": "65ab0e0d09b8b2c5f5ec77e8a3b139a1dfe4060dfbfb60295f7e94e8f38024a9",
+    "device_name": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    "ip_address": "::1",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    "created_at": "2026-06-10T13:31:08.786Z",
+    "expires_at": "2026-06-17T13:31:08.786Z",
+    "revoked_at": null,
+    "is_active": true
+  },
+  {
+    "_id": {
+      "$oid": "677000000000000000000001"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000001"
+    },
+    "refresh_token_hash": "30ccc2462ea09df45202bfcd432079cff4c7eaa528d74c47813f1743b75547b6",
+    "device_name": "Chrome on Windows",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0",
+    "created_at": "2026-06-05T02:05:00.000Z",
+    "expires_at": "2026-07-05T02:05:00.000Z",
+    "revoked_at": null,
+    "is_active": true
+  },
+  {
+    "_id": {
+      "$oid": "677000000000000000000002"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000002"
+    },
+    "refresh_token_hash": "1a63eeb04106b75a8cb8225d8f5dfa0306bf897a7d7131bd6f61964003ee5b76",
+    "device_name": "Safari on iPhone",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0",
+    "created_at": "2026-06-05T02:08:00.000Z",
+    "expires_at": "2026-07-05T02:08:00.000Z",
+    "revoked_at": null,
+    "is_active": true
+  },
+  {
+    "_id": {
+      "$oid": "677000000000000000000003"
+    },
+    "user_id": {
+      "$oid": "66a000000000000000000003"
+    },
+    "refresh_token_hash": "0a835d719f1246461a3b15a42ecefb470e7396642d74a1e680a9ee9848a76651",
+    "device_name": "Chrome on Android",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0",
+    "created_at": "2026-06-05T02:12:00.000Z",
+    "expires_at": "2026-07-05T02:12:00.000Z",
+    "revoked_at": null,
+    "is_active": true
+  }
+]

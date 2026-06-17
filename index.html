@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemoryPic – Khám phá ý tưởng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="account-menu.css">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <button class="logo-btn" data-href="profile.html" title="MemoryPic">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+  </button>
+  <a href="index.html" class="nav-a on" title="Trang chủ"><i class="fas fa-home"></i><span class="tip">Trang chủ</span></a>
+  <a href="explore.html" class="nav-a" title="Khám phá"><i class="fas fa-compass"></i><span class="tip">Khám phá</span></a>
+  <a href="#" class="nav-a" data-href="create.html"><i class="fas fa-plus-circle"></i><span class="tip">Tạo pin</span></a>
+  <a href="messages.html" class="nav-a"><i class="fas fa-comment-dots"></i><span class="tip">Tin nhắn</span></a>
+  <a href="#" class="nav-a" id="notifBtn"><i class="fas fa-bell"></i><span class="tip">Thông báo</span></a>
+  <div class="spacer"></div>
+  <a href="#" class="nav-a"><i class="fas fa-cog"></i><span class="tip">Cài đặt</span></a>
+  <div class="side-avatar" id="avatarBtn">MP</div>
+</nav>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="search-wrap">
+    <i class="fas fa-search"></i>
+    <input class="search-inp" id="searchInp" placeholder="Tìm kiếm ảnh, chủ đề, ý tưởng..." autocomplete="off">
+    <div class="search-drop" id="searchDrop">
+      <div class="sdrop-label">Chủ đề gợi ý</div>
+      <div class="sdrop-item" data-category="interior"><i class="fas fa-couch"></i>Nội thất & Trang trí</div>
+      <div class="sdrop-item" data-category="nature"><i class="fas fa-leaf"></i>Thiên nhiên & Cảnh đẹp</div>
+      <div class="sdrop-item" data-category="food"><i class="fas fa-utensils"></i>Ẩm thực & Công thức</div>
+      <div class="sdrop-item" data-category="travel"><i class="fas fa-plane"></i>Du lịch & Khám phá</div>
+      <div class="sdrop-item" data-category="fashion"><i class="fas fa-tshirt"></i>Thời trang & Phong cách</div>
+      <div class="sdrop-item" data-category="pets"><i class="fas fa-paw"></i>Thú cưng đáng yêu</div>
+      <div class="sdrop-item" data-category="art"><i class="fas fa-paint-brush"></i>Nghệ thuật & Sáng tạo</div>
+    </div>
+  </div>
+  <div class="pills" id="pills"></div>
+</header>
+
+<!-- MAIN -->
+<main class="main">
+  <div id="secHead" class="sec-head is-hidden">
+    <h2 id="secTitle"></h2>
+    <span id="secCount"></span>
+    <a href="#" data-category="all">← Tất cả</a>
+  </div>
+  <div class="masonry" id="grid"></div>
+</main>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Đã lưu vào bộ sưu tập!</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-bg" id="modal" >
+  <div class="modal">
+    <div class="m-img"><img id="mImg" src="" alt=""></div>
+    <div class="m-body">
+      <div class="m-topbar">
+        <button class="m-close" data-action="close-modal"><i class="fas fa-arrow-left"></i></button>
+        <button class="m-like" id="mLikeTop" data-action="like-active-pin"><i class="far fa-heart"></i> <span id="mLikesTop">0</span></button>
+        <button class="m-comment-jump" data-action="focus-comment"><i class="far fa-comment"></i></button>
+        <button class="m-share" data-action="toggle-share"><i class="fas fa-arrow-up-from-bracket"></i></button>
+        <button class="m-more" data-action="toggle-more"><i class="fas fa-ellipsis-h"></i></button>
+        <div class="m-sp"></div>
+        <button class="m-save" data-action="save-active-pin">Lưu</button>
+      </div>
+      <div class="pin-pop share-pop" id="sharePopover">
+        <h3>Chia sẻ</h3>
+        <div class="share-row">
+          <button data-share="copy"><i class="fas fa-link"></i><span>Sao chép liên kết</span></button>
+          <button data-share="whatsapp"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></button>
+          <button data-share="messenger"><i class="fab fa-facebook-messenger"></i><span>Messenger</span></button>
+          <button data-share="facebook"><i class="fab fa-facebook-f"></i><span>Facebook</span></button>
+          <button data-share="x"><i class="fab fa-x-twitter"></i><span>X</span></button>
+        </div>
+        <div class="share-search"><i class="fas fa-search"></i><input id="shareUserSearch" placeholder="Tìm người để gửi..."></div>
+        <div class="share-users" id="shareUsers"></div>
+      </div>
+      <div class="pin-pop more-pop" id="morePopover">
+        <button data-more="download"><i class="fas fa-download"></i> Tải ảnh xuống</button>
+        <button data-more="similar-more"><i class="fas fa-grip"></i> Xem thêm pin tương tự</button>
+        <button data-more="similar-less"><i class="fas fa-eye-slash"></i> Xem ít pin tương tự</button>
+        <button data-more="report"><i class="fas fa-flag"></i> Báo cáo pin</button>
+      </div>
+      <div class="board-sel" data-action="toggle-save-panel"><i class="fas fa-bookmark board-icon-red"></i> <span id="mBoard">Hồ sơ</span> <i class="fas fa-chevron-down"></i></div>
+      <div class="pin-pop save-pop" id="savePanel">
+        <h3>Lưu</h3>
+        <div class="share-search"><i class="fas fa-search"></i><input id="boardSearch" placeholder="Tìm bảng"></div>
+        <div class="save-list" id="saveBoardList"></div>
+        <button class="create-board-btn" data-action="create-board-from-pin"><i class="fas fa-plus"></i> Tạo bảng</button>
+      </div>
+      <div class="m-user">
+        <div class="m-av" data-action="open-pin-user"><img src="" id="mAvatar" alt=""></div>
+        <div>
+          <div class="m-uname" id="mUser" data-action="open-pin-user">–</div>
+          <div class="m-followers" id="mFollowers">–</div>
+        </div>
+        <button class="m-message" data-action="message-pin-user">Nhắn tin</button>
+        <button class="m-follow" data-action="follow-pin-user">Theo dõi</button>
+      </div>
+      <div class="m-title" id="mTitle">–</div>
+      <div class="m-desc" id="mDesc">–</div>
+      <a href="#" class="m-link"><i class="fas fa-link"></i> <span id="mSource">memorypic.vn</span></a>
+      <div class="m-stats">
+        <span id="mLikeBtn"><i class="far fa-heart"></i> <span id="mLikes">–</span></span>
+        <span><i class="far fa-comment"></i> <span id="mComments">–</span> bình luận</span>
+        <span><i class="fas fa-bookmark"></i> <span id="mSaves">–</span> lưu</span>
+      </div>
+      <div class="m-cmts" id="mCmts"></div>
+      <div class="cmt-input-row">
+        <div class="m-av cmt-input-av"><img src="https://i.pravatar.cc/40?img=12" alt=""></div>
+        <input class="cmt-input" placeholder="Thêm bình luận…">
+        <button class="cmt-send"><i class="fas fa-paper-plane"></i></button>
+      </div>
+      <div class="rel-title">Ảnh liên quan</div>
+      <div class="rel-grid" id="mRel"></div>
+    </div>
+  </div>
+</div>
+<script src="api-service.js"></script>
+<script src="data-manager.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

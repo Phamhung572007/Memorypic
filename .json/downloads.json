@@ -1,0 +1,66 @@
+[
+  {
+    "_id": {
+      "$oid": "678000000000000000000001"
+    },
+    "pin_id": {
+      "$oid": "66c000000000000000000013"
+    },
+    "image_upload_id": {
+      "$oid": "676000000000000000000001"
+    },
+    "owner_id": {
+      "$oid": "66a000000000000000000001"
+    },
+    "downloaded_by_id": {
+      "$oid": "66a000000000000000000002"
+    },
+    "file_variant": "original",
+    "file_url": "/uploads/pins/66c000000000000000000013/original.jpg",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0",
+    "created_at": "2026-06-05T06:00:00.000Z"
+  },
+  {
+    "_id": {
+      "$oid": "678000000000000000000002"
+    },
+    "pin_id": {
+      "$oid": "66c000000000000000000014"
+    },
+    "image_upload_id": {
+      "$oid": "676000000000000000000002"
+    },
+    "owner_id": {
+      "$oid": "66a000000000000000000002"
+    },
+    "downloaded_by_id": {
+      "$oid": "66a000000000000000000004"
+    },
+    "file_variant": "original",
+    "file_url": "/uploads/pins/66c000000000000000000014/original.jpg",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0",
+    "created_at": "2026-06-05T06:08:00.000Z"
+  },
+  {
+    "_id": {
+      "$oid": "678000000000000000000003"
+    },
+    "pin_id": {
+      "$oid": "66c000000000000000000015"
+    },
+    "image_upload_id": {
+      "$oid": "676000000000000000000003"
+    },
+    "owner_id": {
+      "$oid": "66a000000000000000000003"
+    },
+    "downloaded_by_id": null,
+    "file_variant": "thumbnail",
+    "file_url": "/uploads/pins/66c000000000000000000015/thumb.webp",
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0",
+    "created_at": "2026-06-05T06:14:00.000Z"
+  }
+]

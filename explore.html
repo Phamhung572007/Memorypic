@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemoryPic - Khám phá</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="explore.css">
+  <link rel="stylesheet" href="account-menu.css">
+</head>
+<body>
+<nav class="sidebar">
+  <button class="logo-btn" data-href="index.html" title="MemoryPic">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+  </button>
+  <a href="index.html" class="nav-a"><i class="fas fa-home"></i><span class="tip">Trang chủ</span></a>
+  <a href="explore.html" class="nav-a on"><i class="fas fa-compass"></i><span class="tip">Khám phá</span></a>
+  <a href="create.html" class="nav-a"><i class="fas fa-plus-circle"></i><span class="tip">Tạo pin</span></a>
+  <a href="messages.html" class="nav-a"><i class="fas fa-comment-dots"></i><span class="tip">Tin nhắn</span></a>
+  <a href="notifications.html" class="nav-a"><i class="fas fa-bell"></i><span class="tip">Thông báo</span></a>
+  <div class="spacer"></div>
+  <div class="side-avatar" id="avatarBadge">MP</div>
+</nav>
+
+<header class="header">
+  <div>
+    <h1>Khám phá</h1>
+    <p>Xu hướng, chủ đề và người sáng tạo đang nổi bật trên MemoryPic.</p>
+  </div>
+  <div class="search-wrap">
+    <i class="fas fa-search"></i>
+    <input id="exploreSearch" placeholder="Tìm pin, chủ đề, creator...">
+  </div>
+</header>
+
+<main class="main">
+  <section class="topic-band" id="topicBand"></section>
+
+  <section class="section-row">
+    <div>
+      <h2>Đang nổi bật</h2>
+      <p>Những pin có nhiều tương tác nhất.</p>
+    </div>
+    <div class="segmented" id="categoryTabs"></div>
+  </section>
+
+  <section class="featured-grid" id="featuredGrid"></section>
+
+  <section class="section-row creator-heading">
+    <div>
+      <h2>Creator gợi ý</h2>
+      <p>Theo dõi người có cùng gu hình ảnh với bạn.</p>
+    </div>
+  </section>
+  <section class="creator-strip" id="creatorStrip"></section>
+
+  <section class="section-row">
+    <div>
+      <h2>Tất cả kết quả</h2>
+      <p id="resultCount">Đang tải...</p>
+    </div>
+  </section>
+  <section class="masonry" id="exploreGrid"></section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="api-service.js"></script>
+<script src="data-manager.js"></script>
+<script src="explore.js"></script>
+</body>
+</html>

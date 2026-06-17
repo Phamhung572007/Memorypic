@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MemoryPic – Trang cá nhân</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="profile.css">
+  <link rel="stylesheet" href="account-menu.css">
+</head>
+<body>
+
+<nav class="sidebar">
+  <button class="logo-btn" data-href="landing.html">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+  </button>
+  <a href="index.html" class="nav-a"><i class="fas fa-home"></i></a>
+  <a href="explore.html" class="nav-a"><i class="fas fa-compass"></i></a>
+  <a href="create.html" class="nav-a"><i class="fas fa-plus-circle"></i></a>
+  <a href="messages.html" class="nav-a"><i class="fas fa-comment-dots"></i></a>
+  <a href="notifications.html" class="nav-a"><i class="fas fa-bell"></i></a>
+  <div class="spacer"></div>
+  <a href="#" class="nav-a"><i class="fas fa-cog"></i></a>
+  <div class="side-avatar on">MP</div>
+</nav>
+
+<header class="header">
+  <div class="search-wrap">
+    <i class="fas fa-search"></i>
+    <input class="search-inp" placeholder="Tìm kiếm…" data-href="index.html">
+  </div>
+  <nav class="nav-pills">
+    <a href="index.html" class="npill">🏠 Trang chủ</a>
+    <a href="explore.html" class="npill">🌿 Thiên nhiên</a>
+    <a href="explore.html" class="npill">🍜 Ẩm thực</a>
+    <a href="explore.html" class="npill">✈️ Du lịch</a>
+    <a href="explore.html" class="npill">🎨 Nghệ thuật</a>
+  </nav>
+</header>
+
+<!-- COVER -->
+<div class="cover profile-cover">
+  <img class="cover-img" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1400&h=280&q=80" alt="Cover">
+  <div class="cover-overlay"></div>
+  <button class="cover-edit"><i class="fas fa-camera"></i> Chỉnh ảnh bìa</button>
+</div>
+
+<!-- PROFILE BAR -->
+<div class="profile-bar">
+  <div class="profile-av-wrap">
+    <div class="profile-av"><img src="https://i.pravatar.cc/96?img=12" alt="avatar"></div>
+    <div class="av-online"></div>
+  </div>
+  <div class="profile-info">
+    <div class="profile-name">Trịnh Anh Tú</div>
+    <div class="profile-handle">@trinhanhtuu · memorypic.vn/trinhanhtuu</div>
+    <div class="profile-stats">
+      <div class="pstat"><strong id="pinCount">248</strong><span>Pins</span></div>
+      <div class="pstat"><strong>12</strong><span>Bảng</span></div>
+      <div class="pstat"><strong>3.4K</strong><span>Theo dõi</span></div>
+      <div class="pstat"><strong>1.2K</strong><span>Đang theo dõi</span></div>
+    </div>
+  </div>
+  <div class="profile-actions">
+    <button class="btn-share"><i class="fas fa-share-nodes"></i></button>
+    <button class="btn-message is-hidden" data-action="message-profile"><i class="fas fa-comment-dots"></i> Nhắn tin</button>
+    <button class="btn-edit" data-action="edit-profile"><i class="fas fa-pen"></i> Chỉnh sửa</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab on" data-tab="pins">Pins đã lưu</div>
+  <div class="tab" data-tab="boards">Bảng</div>
+  <div class="tab" data-tab="created">Đã tạo</div>
+  <div class="tab" data-tab="liked">Đã thích</div>
+</div>
+
+<!-- CONTENT -->
+<div class="profile-content">
+  <section class="profile-summary">
+    <h2>Giới thiệu</h2>
+    <p id="profileBio">Đang tải...</p>
+    <div class="profile-meta">
+      <span id="profileLocation"><i class="fas fa-location-dot"></i> -</span>
+      <span id="profileWebsite"><i class="fas fa-link"></i> -</span>
+    </div>
+  </section>
+
+  <!-- PINS TAB -->
+  <div id="tab-pins">
+    <div class="masonry" id="pinsGrid"></div>
+  </div>
+
+  <!-- BOARDS TAB -->
+  <div id="tab-boards" class="is-hidden">
+    <div class="boards-grid" id="boardsGrid"></div>
+  </div>
+
+  <!-- CREATED TAB -->
+  <div id="tab-created" class="is-hidden">
+    <div class="created-empty">
+      <i class="fas fa-plus-circle created-empty-icon"></i>
+      <p class="created-empty-title">Bạn chưa tạo pin nào</p>
+      <p class="created-empty-copy">Chia sẻ ảnh và ý tưởng của bạn với cộng đồng</p>
+      <button data-href="create.html" class="create-first-btn">Tạo pin đầu tiên</button>
+    </div>
+  </div>
+
+  <!-- LIKED TAB -->
+  <div id="tab-liked" class="is-hidden">
+    <div class="masonry" id="likedGrid"></div>
+  </div>
+
+</div>
+<script src="api-service.js"></script>
+<script src="data-manager.js"></script>
+<script src="profile.js"></script>
+</body>
+</html>
