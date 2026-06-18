@@ -16,7 +16,8 @@ const {
   API_PREFIX = '/api',
   MONGODB_URI,
   MONGODB_DB = 'Memorypic',
-  STORAGE_MODE
+  STORAGE_MODE,
+  GOOGLE_CLIENT_ID
 } = process.env;
 
 const storageMode = (STORAGE_MODE || (MONGODB_URI ? 'mongodb' : 'json')).toLowerCase();
@@ -258,6 +259,118 @@ function signToken(userId) {
   return jwt.sign({ user_id: oid(userId) }, JWT_SECRET, { expiresIn: '7d' });
 }
 
+function uniqueUsername(seed, users, accounts) {
+  const usedUsernames = new Set([
+    ...users.map((u) => String(u.username || '').toLowerCase()),
+    ...accounts.map((a) => String(a.login_username || '').toLowerCase())
+  ]);
+  const base = String(seed || 'memorypic').toLowerCase().replace(/[^a-z0-9_.-]/g, '') || 'memorypic';
+  let username = base;
+  let suffix = 2;
+  while (usedUsernames.has(username)) username = `${base}_${suffix++}`;
+  return username;
+}
+
+function defaultBoardForUser(userId) {
+  return {
+    _id: ref(newId()),
+    user_id: ref(userId),
+    name: 'Mac dinh',
+    description: 'Bang mac dinh',
+    cover_image: null,
+    is_private: false,
+    created_at: nowIso(),
+    updated_at: nowIso()
+  };
+}
+
+function authSessionForUser(userId, req, token) {
+  return {
+    _id: ref(newId()),
+    user_id: ref(userId),
+    refresh_token_hash: crypto.createHash('sha256').update(token).digest('hex'),
+    device_name: req.headers['user-agent'] || 'Browser',
+    ip_address: req.ip,
+    user_agent: req.headers['user-agent'] || '',
+    created_at: nowIso(),
+    expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    revoked_at: null,
+    is_active: true
+  };
+}
+
+async function saveAuthSession(userId, req) {
+  const token = signToken(userId);
+  const session = authSessionForUser(userId, req, token);
+
+  if (storageMode === 'mongodb') {
+    const db = await getMongoDb();
+    await db.collection(MONGO_COLLECTIONS.authSessions).insertOne(convertForMongo(session));
+  } else {
+    const sessions = await readCollection('authSessions');
+    sessions.unshift(session);
+    await writeCollection('authSessions', sessions);
+  }
+
+  return token;
+}
+
+async function verifyGoogleCredential(credential) {
+  if (!GOOGLE_CLIENT_ID) {
+    const err = new Error('Missing GOOGLE_CLIENT_ID');
+    err.statusCode = 503;
+    err.publicMessage = 'Chua cau hinh GOOGLE_CLIENT_ID tren server';
+    throw err;
+  }
+
+  if (!credential) {
+    const err = new Error('Missing Google credential');
+    err.statusCode = 400;
+    err.publicMessage = 'Thieu credential tu Google';
+    throw err;
+  }
+
+  const response = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    const err = new Error(payload.error_description || payload.error || 'Invalid Google token');
+    err.statusCode = 401;
+    err.publicMessage = 'Phien dang nhap Google khong hop le';
+    throw err;
+  }
+
+  if (payload.aud !== GOOGLE_CLIENT_ID) {
+    const err = new Error('Google token audience mismatch');
+    err.statusCode = 401;
+    err.publicMessage = 'Google Client ID khong khop voi server';
+    throw err;
+  }
+
+  if (payload.email_verified !== true && payload.email_verified !== 'true') {
+    const err = new Error('Google email is not verified');
+    err.statusCode = 401;
+    err.publicMessage = 'Email Google chua duoc xac minh';
+    throw err;
+  }
+
+  if (payload.exp && Number(payload.exp) * 1000 < Date.now()) {
+    const err = new Error('Expired Google token');
+    err.statusCode = 401;
+    err.publicMessage = 'Phien dang nhap Google da het han';
+    throw err;
+  }
+
+  return {
+    sub: payload.sub,
+    email: String(payload.email || '').trim().toLowerCase(),
+    first_name: payload.given_name || '',
+    last_name: payload.family_name || '',
+    display_name: payload.name || '',
+    avatar_url: payload.picture || ''
+  };
+}
+
 async function authRequired(req, res, next) {
   const header = req.headers.authorization || '';
   if (!header.startsWith('Bearer ')) {
@@ -375,6 +488,14 @@ app.get(`${API_PREFIX}/health`, (_req, res) => {
   });
 });
 
+app.get(`${API_PREFIX}/auth/google/config`, (_req, res) => {
+  res.json({
+    success: true,
+    enabled: !!GOOGLE_CLIENT_ID,
+    clientId: GOOGLE_CLIENT_ID || null
+  });
+});
+
 app.post(`${API_PREFIX}/auth/login`, async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -390,8 +511,11 @@ app.post(`${API_PREFIX}/auth/login`, async (req, res) => {
     ]);
 
     const account = accounts.find((a) => {
-      return String(a.login_email || '').toLowerCase() === login ||
-        String(a.login_username || '').toLowerCase() === login;
+      const isLocal = !a.provider || a.provider === 'local';
+      return isLocal && (
+        String(a.login_email || '').toLowerCase() === login ||
+        String(a.login_username || '').toLowerCase() === login
+      );
     });
 
     if (!account || !verifyPassword(password, account.password)) {
