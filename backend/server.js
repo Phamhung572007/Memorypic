@@ -563,7 +563,7 @@ app.get(`${API_PREFIX}/pins`, optionalAuth, async (req, res) => {
 
     if (category) {
       const pinIds = new Set(tags.filter((tag) => String(tag.tag_text).toLowerCase() === category).map((tag) => oid(tag.pin_id)));
-      pins = pins.filter((pin) => pinIds.has(oid(pin._id)));
+      pins = pins.filter((pin) => String(pin.category || '').toLowerCase() === category || pinIds.has(oid(pin._id)));
     }
 
     pins = pins.sort((a, b) => String(b.created_at || oid(b._id)).localeCompare(String(a.created_at || oid(a._id))));
@@ -595,8 +595,10 @@ app.post(`${API_PREFIX}/pins`, authRequired, async (req, res) => {
     const body = req.body || {};
     const title = String(body.title || '').trim();
     const imageUrl = String(body.image_url || '').trim();
-    if (!title || !imageUrl) {
-      return res.status(400).json({ success: false, message: 'title and image_url are required' });
+    const allowedCategories = new Set(['interior', 'nature', 'food', 'travel', 'fashion', 'pets', 'art', 'fitness']);
+    const category = String(body.category || '').trim().toLowerCase();
+    if (!title || !imageUrl || !allowedCategories.has(category)) {
+      return res.status(400).json({ success: false, message: 'title, image_url and a valid category are required' });
     }
 
     const [pins, tags, uploads] = await Promise.all([
@@ -614,6 +616,7 @@ app.post(`${API_PREFIX}/pins`, authRequired, async (req, res) => {
       upload_id: ref(uploadId),
       title,
       description: body.description || '',
+      category,
       image_url: imageUrl,
       image_height: Number(body.image_height) || 520,
       link_url: body.link_url || null,
@@ -640,7 +643,7 @@ app.post(`${API_PREFIX}/pins`, authRequired, async (req, res) => {
     });
 
     pins.unshift(pin);
-    [...new Set(Array.isArray(body.tags) ? body.tags : [])]
+    [...new Set([category, ...(Array.isArray(body.tags) ? body.tags : [])])]
       .map((tag) => String(tag).trim().toLowerCase())
       .filter(Boolean)
       .forEach((tag) => {

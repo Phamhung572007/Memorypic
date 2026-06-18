@@ -13,6 +13,17 @@ let currentUser = null;
 let boards = [];
 let currentMode = 'pin';
 
+const PIN_CATEGORIES = new Set([
+  'interior',
+  'nature',
+  'food',
+  'travel',
+  'fashion',
+  'pets',
+  'art',
+  'fitness'
+]);
+
 function requireLogin() {
   currentUser = DB.getCurrentUser();
   if (!currentUser || !APIService.getToken()) {
@@ -29,7 +40,7 @@ async function loadBoards() {
 }
 
 function updateBoardSelect() {
-  const select = document.querySelector('.board-select');
+  const select = document.getElementById('pinBoard');
   if (!select) return;
 
   select.innerHTML = '<option value="">Chọn bảng hoặc tạo mới...</option>';
@@ -155,7 +166,8 @@ function switchMode(mode, element) {
   const titleInput = document.getElementById('pinTitle');
   const descInput = document.getElementById('pinDesc');
   const uploadPanel = document.querySelector('.upload-panel');
-  const boardSelectGroup = document.querySelector('.board-select')?.closest('.form-group');
+  const categoryGroup = document.querySelector('.category-group');
+  const boardSelectGroup = document.getElementById('pinBoard')?.closest('.form-group');
   const tagsGroup = document.getElementById('tagsWrap')?.closest('.form-group');
   const advancedToggle = document.getElementById('advToggle');
   const advancedSection = document.getElementById('advSection');
@@ -165,6 +177,7 @@ function switchMode(mode, element) {
   if (titleInput) titleInput.placeholder = isBoard ? 'Tên bảng mới...' : 'Thêm tiêu đề hấp dẫn...';
   if (descInput) descInput.placeholder = isBoard ? 'Mô tả bảng...' : 'Kể câu chuyện đằng sau bức ảnh này...';
   uploadPanel?.classList.toggle('is-hidden', isBoard);
+  categoryGroup?.classList.toggle('is-hidden', isBoard);
   boardSelectGroup?.classList.toggle('is-hidden', isBoard);
   tagsGroup?.classList.toggle('is-hidden', isBoard);
   advancedToggle?.classList.toggle('is-hidden', isBoard);
@@ -181,13 +194,14 @@ async function publishPin() {
   const title = document.getElementById('pinTitle')?.value.trim();
   const description = document.getElementById('pinDesc')?.value.trim();
   const imageUrl = document.getElementById('previewImg')?.src || '';
-  const boardId = document.querySelector('.board-select')?.value || null;
+  const category = document.getElementById('pinCategory')?.value || '';
+  const boardId = document.getElementById('pinBoard')?.value || null;
   const linkUrl = document.querySelector('.url-input')?.value.trim() || null;
   const toggles = document.querySelectorAll('.toggle-row .toggle');
   const publishButton = document.querySelector('.btn-publish');
 
-  if (!title || !imageUrl) {
-    alert('Vui lòng nhập tiêu đề và chọn ảnh');
+  if (!title || !imageUrl || !PIN_CATEGORIES.has(category)) {
+    alert('Vui lòng nhập tiêu đề, chọn ảnh và chọn danh mục');
     return;
   }
 
@@ -199,6 +213,7 @@ async function publishPin() {
     description,
     image_url: imageUrl,
     image_height: 560,
+    category,
     board_id: boardId,
     link_url: linkUrl,
     tags,
@@ -262,7 +277,8 @@ function resetCreate() {
   document.getElementById('pinTitle').value = '';
   document.getElementById('pinDesc').value = '';
   document.querySelector('.url-input').value = '';
-  document.querySelector('.board-select').value = '';
+  document.getElementById('pinBoard').value = '';
+  document.getElementById('pinCategory').value = '';
   removeImg();
   tags = [];
   renderTags();

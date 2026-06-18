@@ -73,10 +73,27 @@
         <input class="form-input url-input" placeholder="https://...">
       </div>
     </div>
+    <div class="form-group category-group">
+      <label class="form-label" for="pinCategory">Danh mục <span class="required">*</span></label>
+      <div class="board-select-wrap">
+        <select class="board-select category-select" id="pinCategory" required>
+          <option value="">Chọn danh mục cho ảnh...</option>
+          <option value="interior">Nội thất</option>
+          <option value="nature">Thiên nhiên</option>
+          <option value="food">Ẩm thực</option>
+          <option value="travel">Du lịch</option>
+          <option value="fashion">Thời trang</option>
+          <option value="pets">Thú cưng</option>
+          <option value="art">Nghệ thuật</option>
+          <option value="fitness">Sức khỏe</option>
+        </select>
+      </div>
+      <p class="form-help">Ảnh sẽ xuất hiện trong mục bạn chọn trên trang chủ.</p>
+    </div>
     <div class="form-group">
       <label class="form-label">Lưu vào bảng</label>
       <div class="board-select-wrap">
-        <select class="board-select">
+        <select class="board-select" id="pinBoard">
           <option>Chọn bảng hoặc tạo mới…</option>
           <option>Nội thất yêu thích</option>
           <option>Du lịch mơ ước</option>
