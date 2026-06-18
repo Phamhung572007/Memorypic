@@ -454,7 +454,7 @@ if (typeof window !== 'undefined') {
       event.preventDefault();
       APIService.logout();
       DB.clear();
-      location.href = 'login.html';
+      location.href = 'login.html'; 
       return;
     }
 
