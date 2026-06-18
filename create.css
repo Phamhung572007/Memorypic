@@ -221,7 +221,7 @@ textarea {
 .main {
   margin-left: var(--side);
   margin-right: auto;
-  padding: 30px 40px 80px;
+ padding: calc(var(--head) + 20px) 40px 80px;
   display: flex;
   gap: 40px;
   max-width: 1080px;
