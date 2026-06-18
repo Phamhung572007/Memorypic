@@ -222,7 +222,7 @@ textarea {
 .main {
   margin-left: var(--side);
   margin-right: auto;
-  padding: calc(var(--head) + 56px) 40px 80px;
+  padding: calc(var(--head) + 120px) 40px 80px;
   display: flex;
   gap: 40px;
   max-width: 1080px;
@@ -833,7 +833,7 @@ textarea {
   .main {
     margin-left: 0;
     flex-direction: column;
-    padding: calc(var(--head) + 44px) 24px 60px;
+    padding: calc(var(--head) + 96px) 24px 60px;
     gap: 28px;
   }
 
