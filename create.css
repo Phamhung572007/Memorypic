@@ -21,6 +21,10 @@
   padding: 0;
 }
 
+html {
+  scroll-padding-top: calc(var(--head) + 24px);
+}
+
 body {
   min-height: 100vh;
   font-family: var(--body);
@@ -218,7 +222,7 @@ textarea {
 .main {
   margin-left: var(--side);
   margin-right: auto;
-  padding: calc(var(--head) + 40px) 40px 80px;
+  padding: calc(var(--head) + 56px) 40px 80px;
   display: flex;
   gap: 40px;
   max-width: 1080px;
@@ -414,6 +418,10 @@ textarea {
   min-width: 0;
 }
 
+.title-group {
+  scroll-margin-top: calc(var(--head) + 24px);
+}
+
 .form-group {
   position: relative;
 }
@@ -461,6 +469,7 @@ textarea {
   box-shadow: none;
   border-bottom: 2px solid var(--border);
   border-radius: 0;
+  scroll-margin-top: calc(var(--head) + 24px);
 }
 
 #pinTitle:focus {
@@ -824,7 +833,7 @@ textarea {
   .main {
     margin-left: 0;
     flex-direction: column;
-    padding: calc(var(--head) + 20px) 24px 60px;
+    padding: calc(var(--head) + 44px) 24px 60px;
     gap: 28px;
   }
 
