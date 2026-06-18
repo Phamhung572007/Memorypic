@@ -18,11 +18,11 @@ Sua `backend/.env`:
 
 ```env
 STORAGE_MODE=mongodb
-MONGODB_URI=mongodb+srv://memorypic_user:<password>@memorypic.ncblvxf.mongodb.net/?retryWrites=true&w=majority&appName=Memorypic
+MONGODB_URI=mongodb+srv://memorypic_user:<url_encoded_password>@memorypic.ncblvxf.mongodb.net/?retryWrites=true&w=majority&appName=Memorypic
 MONGODB_DB=memorypic
 ```
 
-Thay `<password>` bang password that. Neu password co ky tu dac biet nhu `@`, `#`, `/`, `:` thi can URL encode.
+Thay `<url_encoded_password>` bang password da URL encode. Vi du password `Memorypic@123` thi ghi `Memorypic%40123`.
 
 ## 3. Import du lieu hien tai len Atlas
 

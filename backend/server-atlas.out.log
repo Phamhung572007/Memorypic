@@ -1,0 +1,6 @@
+
+> memorypic-backend@1.0.0 start
+> node server.js
+
+MemoryPic JSON API listening on http://localhost:3000/api
+Connected to MongoDB database "Memorypic"

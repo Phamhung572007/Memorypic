@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
@@ -14,7 +14,29 @@ const shouldDrop = process.argv.includes('--drop');
 async function readJson(filePath) {
   const raw = await fs.promises.readFile(filePath, 'utf8');
   const data = JSON.parse(raw);
-  return Array.isArray(data) ? data : [data];
+  const rows = Array.isArray(data) ? data : [data];
+  return rows.map(convertExtendedJson);
+}
+
+function isObjectIdHex(value) {
+  return typeof value === 'string' && /^[a-f\d]{24}$/i.test(value);
+}
+
+function convertExtendedJson(value) {
+  if (Array.isArray(value)) return value.map(convertExtendedJson);
+  if (value && typeof value === 'object') {
+    const keys = Object.keys(value);
+    if (keys.length === 1 && keys[0] === '$oid' && isObjectIdHex(value.$oid)) {
+      return new ObjectId(value.$oid);
+    }
+
+    const output = {};
+    Object.entries(value).forEach(([key, item]) => {
+      output[key] = convertExtendedJson(item);
+    });
+    return output;
+  }
+  return value;
 }
 
 async function main() {

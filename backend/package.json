@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "prepare:mongo-import": "node scripts/prepare-mongo-import.js",
     "import:mongodb": "node scripts/import-to-mongodb.js",
-    "import:mongodb:drop": "node scripts/import-to-mongodb.js --drop"
+    "import:mongodb:drop": "node scripts/import-to-mongodb.js --drop",
+    "sync:atlas": "node scripts/sync-local-to-atlas.js"
   },
 
   "dependencies": {
