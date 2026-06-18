@@ -1,0 +1,11 @@
+backend/node_modules/
+backend/.env
+backend/*.log
+backend/server-atlas.*.log
+
+.json/
+mongo-import/*.json
+
+.DS_Store
+Thumbs.db
+*.tmp

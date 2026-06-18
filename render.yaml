@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: memorypic
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: API_PREFIX
+        value: /api
+      - key: STORAGE_MODE
+        value: mongodb
+      - key: MONGODB_DB
+        value: Memorypic
+      - key: JWT_SECRET
+        sync: false
+      - key: MONGODB_URI
+        sync: false

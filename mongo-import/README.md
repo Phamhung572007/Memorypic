@@ -4,7 +4,7 @@ Cac file trong thu muc nay duoc tao tu `.json` va giu dinh dang Extended JSON, v
 
 Cach import bang MongoDB Compass:
 
-1. Tao database ten `memorypic`.
+1. Tao database ten `Memorypic`.
 2. Tao collection theo cot `collection` ben duoi.
 3. Vao collection > Add Data > Import JSON or CSV file.
 4. Chon file JSON tu thu muc nay va import dang JSON.
@@ -17,7 +17,7 @@ PORT=3000
 JWT_SECRET=mysecret
 STORAGE_MODE=mongodb
 MONGODB_URI=mongodb://127.0.0.1:27017
-MONGODB_DB=memorypic
+MONGODB_DB=Memorypic
 ```
 
 | collection | file | records |

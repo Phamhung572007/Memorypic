@@ -9,7 +9,7 @@ C:\Memorypic\mongo-import
 Trong MongoDB Compass:
 
 1. Ket noi local MongoDB, vi du `mongodb://127.0.0.1:27017`.
-2. Tao database ten `memorypic`.
+2. Tao database ten `Memorypic`.
 3. Tao lan luot cac collection theo ten file trong `mongo-import`, bo duoi `.json`.
    Vi du: file `pins.json` import vao collection `pins`.
 4. Vao tung collection > `Add Data` > `Import JSON or CSV file` > chon file JSON tu `mongo-import`.
@@ -20,7 +20,7 @@ Sau khi import local xong, sua `backend\.env`:
 ```env
 STORAGE_MODE=mongodb
 MONGODB_URI=mongodb://127.0.0.1:27017
-MONGODB_DB=memorypic
+MONGODB_DB=Memorypic
 ```
 
 Chay backend:

@@ -15,7 +15,7 @@ const {
   JWT_SECRET = 'mysecret',
   API_PREFIX = '/api',
   MONGODB_URI,
-  MONGODB_DB = 'memorypic',
+  MONGODB_DB = 'Memorypic',
   STORAGE_MODE
 } = process.env;
 
@@ -1237,5 +1237,5 @@ app.use((err, _req, res, _next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`MemoryPic JSON API listening on http://localhost:${PORT}${API_PREFIX}`);
+  console.log(`MemoryPic API listening on port ${PORT}${API_PREFIX}`);
 });

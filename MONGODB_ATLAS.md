@@ -19,7 +19,7 @@ Sua `backend/.env`:
 ```env
 STORAGE_MODE=mongodb
 MONGODB_URI=mongodb+srv://memorypic_user:<url_encoded_password>@memorypic.ncblvxf.mongodb.net/?retryWrites=true&w=majority&appName=Memorypic
-MONGODB_DB=memorypic
+MONGODB_DB=Memorypic
 ```
 
 Thay `<url_encoded_password>` bang password da URL encode. Vi du password `Memorypic@123` thi ghi `Memorypic%40123`.
@@ -56,7 +56,7 @@ npm start
 Khi backend hien:
 
 ```txt
-Connected to MongoDB database "memorypic"
+Connected to MongoDB database "Memorypic"
 ```
 
 la web dang dung Atlas. Nguoi khac vao website qua backend nay se thay cung du lieu tren cloud.
