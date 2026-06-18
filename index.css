@@ -93,15 +93,15 @@
     .main{margin-left:var(--side);padding:calc(var(--head) + 18px) 18px 60px;}
 
     /* masonry */
-    .masonry{columns:5;column-gap:14px;}
+    .masonry{columns:5;column-gap:12px;}
     @media(max-width:1500px){.masonry{columns:5;}}
     @media(max-width:1200px){.masonry{columns:4;}}
     @media(max-width:900px){.masonry{columns:3;}}
     @media(max-width:620px){.masonry{columns:2;}.sidebar{display:none;}.main{margin-left:0;}.header{left:0;}}
 
     /* card */
-    .card{break-inside:avoid;margin-bottom:14px;border-radius:var(--r);overflow:hidden;position:relative;cursor:pointer;background:#ddd8d4;}
-    .card img{width:100%;height:clamp(260px,19vw,260px);object-fit:cover;display:block;transition:transform .35s ease;}
+    .card{break-inside:avoid;margin-bottom:12px;border-radius:var(--r);overflow:hidden;position:relative;cursor:pointer;background:#ddd8d4;}
+    .card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .35s ease;}
     .card:hover img{transform:scale(1.04);}
     .card-ov{
       position:absolute;inset:0;
