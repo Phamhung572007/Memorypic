@@ -465,7 +465,7 @@ textarea {
   line-height: 1.2;
   padding: 12px 0;
   background: transparent;
-  box-shadow: none;
+  border: none;
   border-bottom: 2px solid var(--border);
   border-radius: 0;
   scroll-margin-top: calc(var(--head) + 24px);
