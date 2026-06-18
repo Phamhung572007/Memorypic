@@ -17,6 +17,79 @@ function cacheUser(user) {
   DB.setCurrentUser(user);
 }
 
+function waitForGoogleIdentity() {
+  if (window.google?.accounts?.id) return Promise.resolve(true);
+
+  return new Promise((resolve) => {
+    let attempts = 0;
+    const timer = setInterval(() => {
+      attempts += 1;
+      if (window.google?.accounts?.id) {
+        clearInterval(timer);
+        resolve(true);
+      } else if (attempts > 40) {
+        clearInterval(timer);
+        resolve(false);
+      }
+    }, 125);
+  });
+}
+
+async function handleGoogleCredential(response) {
+  if (!response?.credential) {
+    alert('Google khong tra ve thong tin dang nhap');
+    return;
+  }
+
+  const result = await APIService.loginWithGoogle(response.credential);
+  if (!result.success) {
+    alert(result.message || 'Khong the dang nhap bang Google');
+    return;
+  }
+
+  cacheUser(result.user);
+  location.href = 'index.html';
+}
+
+async function initGoogleLogin() {
+  const fallbackButtons = Array.from(document.querySelectorAll('[data-google-fallback]'));
+  const googleSlots = Array.from(document.querySelectorAll('[data-google-button]'));
+
+  fallbackButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      alert('Dang nhap Google chua san sang. Kiem tra GOOGLE_CLIENT_ID tren server.');
+    });
+  });
+
+  const config = await APIService.getGoogleAuthConfig();
+  if (!config.success || !config.enabled || !config.clientId) return;
+
+  const isReady = await waitForGoogleIdentity();
+  if (!isReady) return;
+
+  window.google.accounts.id.initialize({
+    client_id: config.clientId,
+    callback: handleGoogleCredential,
+    auto_select: false,
+    cancel_on_tap_outside: true
+  });
+
+  googleSlots.forEach((slot) => {
+    window.google.accounts.id.renderButton(slot, {
+      theme: 'outline',
+      size: 'large',
+      type: 'standard',
+      shape: 'rectangular',
+      text: 'continue_with',
+      logo_alignment: 'left',
+      width: Math.min(slot.parentElement?.clientWidth || 376, 400)
+    });
+    slot.classList.add('is-ready');
+  });
+
+  fallbackButtons.forEach((button) => button.classList.add('is-hidden'));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const wantsSignup = new URLSearchParams(location.search).has('signup');
 
@@ -111,6 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
     cacheUser(result.user);
     location.href = 'index.html';
   });
+
+  initGoogleLogin();
 });
 
 window.showSignup = showSignup;

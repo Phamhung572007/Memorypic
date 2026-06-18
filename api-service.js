@@ -73,6 +73,20 @@ class APIService {
     return data;
   }
 
+  static getGoogleAuthConfig() {
+    return this.request('/auth/google/config');
+  }
+
+  static async loginWithGoogle(credential) {
+    const data = await this.request('/auth/google', {
+      method: 'POST',
+      headers: this.headers(true),
+      body: JSON.stringify({ credential })
+    });
+    if (data.success) this.setSession(data);
+    return data;
+  }
+
   static getPins(page = 1, limit = 20, category = '') {
     const params = new URLSearchParams({ page, limit });
     if (category && category !== 'all') params.set('category', category);

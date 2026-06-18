@@ -169,6 +169,21 @@
     }
     .btn-google:hover { border-color: #ccc; background: #fafafa; }
 
+    .google-button-slot {
+      width: 100%;
+      min-height: 44px;
+      display: none;
+    }
+
+    .google-button-slot.is-ready {
+      display: flex;
+      justify-content: center;
+    }
+
+    .google-button-slot > div {
+      width: 100% !important;
+    }
+
     .back-link {
       display: inline-flex;
       align-items: center;

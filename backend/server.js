@@ -554,6 +554,142 @@ app.post(`${API_PREFIX}/auth/login`, async (req, res) => {
   }
 });
 
+app.post(`${API_PREFIX}/auth/google`, async (req, res) => {
+  try {
+    const profile = await verifyGoogleCredential(req.body?.credential || '');
+    if (!profile.email) {
+      return res.status(400).json({ success: false, message: 'Google khong tra ve email' });
+    }
+
+    const [users, accounts, boards] = await Promise.all([
+      readCollection('users'),
+      readCollection('authAccounts'),
+      readCollection('boards')
+    ]);
+
+    const googleAccount = accounts.find((account) => {
+      return account.provider === 'google' &&
+        (String(account.provider_user_id || '') === profile.sub ||
+          String(account.login_email || '').toLowerCase() === profile.email);
+    });
+
+    let user = googleAccount ? findById(users, googleAccount.user_id) : null;
+    let accountToInsert = null;
+    let userToInsert = null;
+    let boardToInsert = null;
+    const now = nowIso();
+
+    if (!user) {
+      user = users.find((row) => String(row.email || '').toLowerCase() === profile.email);
+    }
+
+    if (!user) {
+      const userId = newId();
+      const accountId = newId();
+      const username = uniqueUsername(profile.email.split('@')[0], users, accounts);
+      user = {
+        _id: ref(userId),
+        auth_account_id: ref(accountId),
+        username,
+        email: profile.email,
+        first_name: profile.first_name,
+        last_name: profile.last_name,
+        display_name: profile.display_name || `${profile.first_name} ${profile.last_name}`.trim() || username,
+        phone: '',
+        birthdate: '',
+        avatar_url: profile.avatar_url || `https://i.pravatar.cc/150?u=${encodeURIComponent(profile.email)}`,
+        cover_url: 'https://picsum.photos/1200/360?random=200',
+        bio: '',
+        website: '',
+        location: '',
+        profile_visibility: 'public',
+        is_active: true,
+        email_verified: true,
+        role: 'user',
+        settings: {
+          allow_messages: true,
+          allow_downloads: true,
+          show_email: false
+        },
+        created_at: now,
+        updated_at: now
+      };
+      userToInsert = user;
+      accountToInsert = {
+        _id: ref(accountId),
+        user_id: ref(userId),
+        provider: 'google',
+        provider_user_id: profile.sub,
+        login_email: profile.email,
+        login_username: username,
+        password: null,
+        is_email_verified: true,
+        failed_login_count: 0,
+        locked_until: null,
+        last_login_at: now,
+        password_updated_at: null,
+        created_at: now
+      };
+      boardToInsert = defaultBoardForUser(userId);
+    } else if (user.is_active === false) {
+      return res.status(401).json({ success: false, message: 'Tai khoan da bi khoa' });
+    } else if (!googleAccount) {
+      accountToInsert = {
+        _id: ref(newId()),
+        user_id: ref(user._id),
+        provider: 'google',
+        provider_user_id: profile.sub,
+        login_email: profile.email,
+        login_username: user.username || uniqueUsername(profile.email.split('@')[0], users, accounts),
+        password: null,
+        is_email_verified: true,
+        failed_login_count: 0,
+        locked_until: null,
+        last_login_at: now,
+        password_updated_at: null,
+        created_at: now
+      };
+    }
+
+    if (storageMode === 'mongodb') {
+      const db = await getMongoDb();
+      const writes = [];
+      if (userToInsert) writes.push(db.collection(MONGO_COLLECTIONS.users).insertOne(convertForMongo(userToInsert)));
+      if (accountToInsert) writes.push(db.collection(MONGO_COLLECTIONS.authAccounts).insertOne(convertForMongo(accountToInsert)));
+      if (boardToInsert) writes.push(db.collection(MONGO_COLLECTIONS.boards).insertOne(convertForMongo(boardToInsert)));
+      if (googleAccount) {
+        writes.push(db.collection(MONGO_COLLECTIONS.authAccounts).updateOne(
+          { _id: convertForMongo(googleAccount._id) },
+          { $set: { last_login_at: now, login_email: profile.email, provider_user_id: profile.sub } }
+        ));
+      }
+      await Promise.all(writes);
+    } else {
+      if (userToInsert) users.push(userToInsert);
+      if (accountToInsert) accounts.push(accountToInsert);
+      if (boardToInsert) boards.push(boardToInsert);
+      if (googleAccount) {
+        googleAccount.last_login_at = now;
+        googleAccount.login_email = profile.email;
+      }
+      await Promise.all([
+        writeCollection('users', users),
+        writeCollection('authAccounts', accounts),
+        writeCollection('boards', boards)
+      ]);
+    }
+
+    const token = await saveAuthSession(user._id, req);
+    res.json({ success: true, message: 'Google login success', token, user: await buildUser(user) });
+  } catch (err) {
+    console.error('google auth error', err);
+    res.status(err.statusCode || 500).json({
+      success: false,
+      message: err.publicMessage || 'Khong the dang nhap bang Google luc nay'
+    });
+  }
+});
+
 app.post(`${API_PREFIX}/auth/signup`, async (req, res) => {
   try {
     const body = req.body || {};
