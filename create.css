@@ -472,8 +472,7 @@ textarea {
   display: block;
   width: 100%;
   min-height: 60px;
-  color: #111 !important;
-  background: #fff8dc !important;
+  color: #111;
 }
 
 #pinTitle:focus {
