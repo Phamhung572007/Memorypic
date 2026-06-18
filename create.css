@@ -821,8 +821,15 @@ textarea {
 }
 
 @media (max-width: 900px) {
-  .sidebar {
-    display: none;
+    .main {
+      margin-left: 0;
+      flex-direction: column;
+      /* Tăng khoảng cách cho màn hình nhỏ */
+      padding-top: calc(var(--head) + 100px) !important; 
+      padding-left: 24px;
+      padding-right: 24px;
+      gap: 28px;
+    }
   }
 
   .header {
