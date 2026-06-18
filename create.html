@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MemoryPic – Tạo Pin</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -10,74 +11,79 @@
 </head>
 <body>
 <nav class="sidebar">
-  <button class="logo-btn" data-href="landing.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></button>
-  <a href="index.html" class="nav-a"><i class="fas fa-home"></i></a>
-  <a href="explore.html" class="nav-a"><i class="fas fa-compass"></i></a>
-  <a href="create.html" class="nav-a on"><i class="fas fa-plus-circle"></i></a>
-  <a href="messages.html" class="nav-a"><i class="fas fa-comment-dots"></i></a>
-  <a href="notifications.html" class="nav-a"><i class="fas fa-bell"></i></a>
+  <button class="logo-btn" data-href="landing.html" type="button" aria-label="Về trang giới thiệu">
+    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+  </button>
+  <a href="index.html" class="nav-a" aria-label="Trang chủ"><i class="fas fa-home"></i></a>
+  <a href="explore.html" class="nav-a" aria-label="Khám phá"><i class="fas fa-compass"></i></a>
+  <a href="create.html" class="nav-a on" aria-label="Tạo mới"><i class="fas fa-plus-circle"></i></a>
+  <a href="messages.html" class="nav-a" aria-label="Tin nhắn"><i class="fas fa-comment-dots"></i></a>
+  <a href="notifications.html" class="nav-a" aria-label="Thông báo"><i class="fas fa-bell"></i></a>
   <div class="spacer"></div>
-  <a href="#" class="nav-a"><i class="fas fa-cog"></i></a>
+  <a href="#" class="nav-a" aria-label="Cài đặt"><i class="fas fa-cog"></i></a>
   <div class="side-avatar">MP</div>
 </nav>
 
 <header class="header">
-  <h1>Tạo mới</h1>
-  <div class="header-tabs">
-    <div class="htab on" data-mode="pin">Pin</div>
-    <div class="htab" data-mode="board">Bảng</div>
+  <h1 id="pageTitle">Tạo Ghim</h1>
+  <div class="header-tabs" role="tablist" aria-label="Chọn loại nội dung">
+    <button type="button" class="htab on" data-mode="pin" role="tab" aria-selected="true">Pin</button>
+    <button type="button" class="htab" data-mode="board" role="tab" aria-selected="false">Bảng</button>
   </div>
   <div class="header-sp"></div>
-  <button class="btn-draft">Lưu nháp</button>
-  <button class="btn-publish" data-action="publish-pin">Đăng pin</button>
+  <button class="btn btn-draft" data-action="save-draft" type="button">Lưu nháp</button>
+  <button class="btn btn-publish" data-action="publish-pin" type="button">Đăng</button>
 </header>
 
 <main class="main" id="mainContent">
-  <!-- UPLOAD -->
-  <div class="upload-panel">
-    <div class="upload-zone" id="uploadZone" data-action="trigger-upload">
-      <div class="upload-icon"><i class="fas fa-cloud-arrow-up"></i></div>
-      <div class="upload-text">
-        <h3>Kéo thả hoặc nhấn để tải lên</h3>
-        <p>Hỗ trợ JPG, PNG, GIF, WEBP<br>Tối đa 20MB</p>
+  <section class="upload-panel" id="uploadPanel" aria-label="Tải ảnh lên">
+    <div class="upload-zone" id="uploadZone" data-action="trigger-upload" role="button" tabindex="0">
+      <div class="upload-content" id="uploadContent">
+        <div class="upload-icon"><i class="fas fa-arrow-up"></i></div>
+        <div class="upload-text">
+          <h3>Chọn tệp hoặc kéo thả vào đây</h3>
+          <p>Kích thước đề xuất: 1000x1500px<br>Tối đa 20MB</p>
+        </div>
       </div>
-      <div class="upload-actions">
-        <button class="ua-btn outline" data-action="choose-url">Chọn từ URL</button>
-        <button class="ua-btn solid" data-action="use-demo">Dùng ảnh demo</button>
-      </div>
-      <img class="preview is-hidden" id="previewImg" alt="Preview">
-      <div class="upload-overlay-btns">
-        <button class="uob-btn" title="Thay ảnh" data-action="remove-image"><i class="fas fa-sync"></i></button>
-        <button class="uob-btn" title="Xoá" data-action="remove-image"><i class="fas fa-trash"></i></button>
+      <img class="preview is-hidden" id="previewImg" alt="Bản xem trước">
+      <div class="upload-overlay-btns" aria-label="Thao tác với ảnh">
+        <button class="uob-btn" title="Thay đổi" data-action="trigger-upload" type="button"><i class="fas fa-pen"></i></button>
+        <button class="uob-btn" title="Xóa ảnh" data-action="remove-image" type="button"><i class="fas fa-trash-alt"></i></button>
       </div>
     </div>
-    <input type="file" id="fileInput" accept="image/*" class="is-hidden" >
-  </div>
+    <div class="demo-btn-wrap">
+      <button class="demo-btn" data-action="choose-url" type="button">Ảnh từ URL</button>
+      <button class="demo-btn primary" data-action="use-demo" type="button">Ảnh ngẫu nhiên</button>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" class="is-hidden">
+  </section>
 
-  <!-- FORM -->
-  <div class="form-panel">
-    <div class="form-group">
-      <label class="form-label">Tiêu đề <span class="required">*</span></label>
-      <input class="form-input" id="pinTitle" placeholder="Thêm tiêu đề hấp dẫn…" maxlength="100" data-count-target="titleCount">
+  <section class="form-panel" aria-label="Thông tin nội dung">
+    <div class="form-group title-group">
+      <label class="sr-only" for="pinTitle">Tiêu đề</label>
+      <input class="form-input" id="pinTitle" placeholder="Thêm tiêu đề" maxlength="100" data-count-target="titleCount">
       <div class="char-count"><span id="titleCount">0</span>/100</div>
     </div>
+
     <div class="form-group">
-      <label class="form-label">Mô tả</label>
-      <textarea class="form-textarea" id="pinDesc" placeholder="Kể câu chuyện đằng sau bức ảnh này…" maxlength="500" data-count-target="descCount"></textarea>
+      <label class="form-label" for="pinDesc">Mô tả</label>
+      <textarea class="form-textarea" id="pinDesc" placeholder="Thêm mô tả chi tiết để mọi người biết pin này giới thiệu về điều gì" maxlength="500" data-count-target="descCount"></textarea>
       <div class="char-count"><span id="descCount">0</span>/500</div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Liên kết (tuỳ chọn)</label>
+
+    <div class="form-group pin-only" id="linkGroup">
+      <label class="form-label" for="pinLink">Liên kết đích</label>
       <div class="url-input-wrap">
         <i class="fas fa-link"></i>
-        <input class="form-input url-input" placeholder="https://...">
+        <input class="form-input url-input" id="pinLink" placeholder="Thêm liên kết liên quan">
       </div>
     </div>
-    <div class="form-group category-group">
+
+    <div class="form-group category-group pin-only">
       <label class="form-label" for="pinCategory">Danh mục <span class="required">*</span></label>
       <div class="board-select-wrap">
         <select class="board-select category-select" id="pinCategory" required>
-          <option value="">Chọn danh mục cho ảnh...</option>
+          <option value="">Chọn danh mục cho ảnh</option>
           <option value="interior">Nội thất</option>
           <option value="nature">Thiên nhiên</option>
           <option value="food">Ẩm thực</option>
@@ -88,64 +94,69 @@
           <option value="fitness">Sức khỏe</option>
         </select>
       </div>
-      <p class="form-help">Ảnh sẽ xuất hiện trong mục bạn chọn trên trang chủ.</p>
+      <p class="form-help">Ảnh sẽ xuất hiện trong danh mục bạn chọn trên trang chủ.</p>
     </div>
-    <div class="form-group">
-      <label class="form-label">Lưu vào bảng</label>
+
+    <div class="form-group pin-only" id="boardGroup">
+      <label class="form-label" for="pinBoard">Bảng</label>
       <div class="board-select-wrap">
         <select class="board-select" id="pinBoard">
-          <option>Chọn bảng hoặc tạo mới…</option>
-          <option>Nội thất yêu thích</option>
-          <option>Du lịch mơ ước</option>
-          <option>Công thức nấu ăn</option>
-          <option>Thiên nhiên kỳ diệu</option>
-          <option>Thời trang cảm hứng</option>
-          <option>Thú cưng đáng yêu</option>
-          <option>Nghệ thuật & Sáng tạo</option>
-          <option>Sức khoẻ & Yoga</option>
-          <option>+ Tạo bảng mới</option>
+          <option value="">Chọn một bảng</option>
         </select>
       </div>
     </div>
-    <div class="form-group">
-      <label class="form-label">Thẻ tag</label>
+
+    <div class="form-group pin-only" id="tagGroup">
+      <label class="form-label" for="tagInp">Chủ đề (Tags)</label>
       <div class="tags-wrap" id="tagsWrap" data-action="focus-tags">
-        <input class="tag-input" id="tagInp" placeholder="Nhập tag rồi nhấn Enter…">
+        <input class="tag-input" id="tagInp" placeholder="Tìm kiếm hoặc tạo thẻ...">
       </div>
     </div>
 
-    <!-- ADVANCED -->
-    <div class="advanced-toggle" id="advToggle" data-action="toggle-advanced">
-      <i class="fas fa-sliders"></i> Tuỳ chọn nâng cao
-      <i class="fas fa-chevron-down advanced-chevron"></i>
+    <div class="adv-section-wrap pin-only">
+      <button class="adv-toggle" id="advToggle" data-action="toggle-advanced" type="button" aria-expanded="false" aria-controls="advSection">
+        <span>Tùy chọn khác</span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="adv-content" id="advSection">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <h4>Cho phép nhận xét</h4>
+            <p>Mọi người có thể nhận xét về pin này</p>
+          </div>
+          <button class="switch on" data-action="toggle-switch" data-option="allow-comments" type="button" aria-label="Cho phép nhận xét"></button>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <h4>Ẩn khỏi tìm kiếm</h4>
+            <p>Pin chỉ hiển thị với người có liên kết</p>
+          </div>
+          <button class="switch" data-action="toggle-switch" data-option="hide-search" type="button" aria-label="Ẩn khỏi tìm kiếm"></button>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <h4>Ghi công nguồn gốc</h4>
+            <p>Tự động thêm nguồn ảnh vào pin</p>
+          </div>
+          <button class="switch on" data-action="toggle-switch" data-option="source-credit" type="button" aria-label="Ghi công nguồn gốc"></button>
+        </div>
+      </div>
     </div>
-    <div class="advanced-section" id="advSection">
-      <div class="toggle-row">
-        <div class="toggle-info"><h4>Cho phép bình luận</h4><p>Người khác có thể bình luận vào pin này</p></div>
-        <div class="toggle on" data-action="toggle-switch"></div>
-      </div>
-      <div class="toggle-row">
-        <div class="toggle-info"><h4>Ẩn khỏi tìm kiếm</h4><p>Pin chỉ hiển thị với người có liên kết</p></div>
-        <div class="toggle" data-action="toggle-switch"></div>
-      </div>
-      <div class="toggle-row">
-        <div class="toggle-info"><h4>Ghi công nguồn gốc</h4><p>Tự động thêm nguồn ảnh vào pin</p></div>
-        <div class="toggle on" data-action="toggle-switch"></div>
-      </div>
-    </div>
-  </div>
+  </section>
 </main>
 
-<!-- SUCCESS -->
-<div class="success-screen" id="successScreen">
-  <div class="success-icon">🎉</div>
-  <h2 class="success-title">Pin đã được đăng!</h2>
-  <p class="success-copy">Pin của bạn đang được chia sẻ với cộng đồng MemoryPic</p>
+<section class="success-screen" id="successScreen" aria-live="polite">
+  <div class="success-icon"><i class="fas fa-check"></i></div>
+  <h2 class="success-title">Đã tạo Ghim!</h2>
+  <p class="success-copy">Tuyệt vời! Pin của bạn hiện đã có mặt trên hệ thống và sẵn sàng chia sẻ nguồn cảm hứng.</p>
   <div class="success-actions">
-    <button data-href="index.html" class="success-btn primary">Xem feed</button>
-    <button data-action="reset-create" class="success-btn secondary">Tạo pin khác</button>
+    <button data-action="reset-create" class="btn btn-draft" type="button">Tạo ghim khác</button>
+    <button data-href="profile.html" class="btn btn-publish" type="button">Xem hồ sơ</button>
   </div>
-</div>
+</section>
+
+<div class="toast" id="formToast" role="status" aria-live="polite"></div>
+
 <script src="api-service.js"></script>
 <script src="data-manager.js"></script>
 <script src="create.js"></script>
