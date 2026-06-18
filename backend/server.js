@@ -395,12 +395,12 @@ app.post(`${API_PREFIX}/auth/login`, async (req, res) => {
     });
 
     if (!account || !verifyPassword(password, account.password)) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      return res.status(401).json({ success: false, message: 'Email hoặc mật khẩu không chính xác' });
     }
 
     const user = findById(users, account.user_id);
     if (!user || user.is_active === false) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      return res.status(401).json({ success: false, message: 'Tài khoản không tồn tại hoặc đã bị khóa' });
     }
 
     account.last_login_at = nowIso();
@@ -434,7 +434,7 @@ app.post(`${API_PREFIX}/auth/signup`, async (req, res) => {
   try {
     const body = req.body || {};
     const email = String(body.email || '').trim().toLowerCase();
-    const username = String(body.username || email.split('@')[0] || '').trim().toLowerCase();
+    let username = String(body.username || email.split('@')[0] || '').trim().toLowerCase();
     const password = String(body.password || '');
 
     if (!email || !username || !password) {
@@ -447,11 +447,22 @@ app.post(`${API_PREFIX}/auth/signup`, async (req, res) => {
       readCollection('boards')
     ]);
 
-    const exists = users.some((u) => String(u.email).toLowerCase() === email || String(u.username).toLowerCase() === username) ||
-      accounts.some((a) => String(a.login_email).toLowerCase() === email || String(a.login_username).toLowerCase() === username);
+    const emailExists = users.some((u) => String(u.email || '').toLowerCase() === email) ||
+      accounts.some((a) => String(a.login_email || '').toLowerCase() === email);
 
-    if (exists) {
-      return res.status(409).json({ success: false, message: 'Username or email already exists' });
+    if (emailExists) {
+      return res.status(409).json({ success: false, message: 'Email này đã được đăng ký' });
+    }
+
+    const usedUsernames = new Set([
+      ...users.map((u) => String(u.username || '').toLowerCase()),
+      ...accounts.map((a) => String(a.login_username || '').toLowerCase())
+    ]);
+    const usernameBase = username.replace(/[^a-z0-9_.-]/g, '') || 'memorypic';
+    username = usernameBase;
+    let usernameSuffix = 2;
+    while (usedUsernames.has(username)) {
+      username = `${usernameBase}_${usernameSuffix++}`;
     }
 
     const userId = newId();

@@ -18,12 +18,14 @@ function cacheUser(user) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (APIService.getCurrentUser() && APIService.getToken()) {
+  const wantsSignup = new URLSearchParams(location.search).has('signup');
+
+  if (APIService.getCurrentUser() && APIService.getToken() && !wantsSignup) {
     location.href = 'index.html';
     return;
   }
 
-  if (location.search.includes('signup')) showSignup();
+  if (wantsSignup) showSignup();
 
   document.querySelectorAll('[data-auth-view]').forEach((link) => {
     link.addEventListener('click', (event) => {
@@ -35,6 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const loginForm = document.getElementById('login-form');
   const signupForm = document.getElementById('signup-form');
+
+  [loginForm, signupForm].forEach((form) => {
+    form?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && event.target.matches('input')) {
+        event.preventDefault();
+        form.querySelector('.btn-submit')?.click();
+      }
+    });
+  });
 
   loginForm?.querySelector('.btn-submit')?.addEventListener('click', async (event) => {
     event.preventDefault();
