@@ -310,6 +310,10 @@ function formatCompactNumber(value) {
   return String(number);
 }
 
+function hasUserChrome() {
+  return !!document.querySelector('.side-avatar, .pd-av, .pd-name, .pd-email, #accountMenu');
+}
+
 function ensureAccountMenu() {
   if (document.getElementById('accountMenu')) return document.getElementById('accountMenu');
 
@@ -368,7 +372,11 @@ function toggleAccountMenu() {
 }
 
 function updateGlobalUserChrome() {
-  ensureAccountMenu();
+  if (!hasUserChrome()) return;
+  if (document.querySelector('.side-avatar') || document.getElementById('accountMenu')) {
+    ensureAccountMenu();
+  }
+
   const user = DB.getCurrentUser();
   const displayName = getCurrentUserDisplayName(user);
   const avatarText = getCurrentUserAvatarText(user);
