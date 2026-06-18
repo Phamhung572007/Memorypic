@@ -10,15 +10,26 @@ dotenv.config();
 
 const app = express();
 
-const {
-  PORT = 3000,
-  JWT_SECRET = 'mysecret',
-  API_PREFIX = '/api',
-  MONGODB_URI,
-  MONGODB_DB = 'Memorypic',
-  STORAGE_MODE,
-  GOOGLE_CLIENT_ID
-} = process.env;
+function envText(name, fallback = '') {
+  const value = process.env[name];
+  if (typeof value !== 'string') return fallback;
+  const trimmed = value.trim();
+  return trimmed || fallback;
+}
+
+const PORT = envText('PORT', '3000');
+const configuredJwtSecret = envText('JWT_SECRET');
+const JWT_SECRET = configuredJwtSecret || crypto.randomBytes(32).toString('hex');
+const API_PREFIX = envText('API_PREFIX', '/api');
+const MONGODB_URI = envText('MONGODB_URI');
+const MONGODB_DB = envText('MONGODB_DB', 'Memorypic');
+const STORAGE_MODE = envText('STORAGE_MODE');
+const GOOGLE_CLIENT_ID = envText('GOOGLE_CLIENT_ID');
+const isJwtSecretConfigured = !!configuredJwtSecret;
+
+if (!isJwtSecretConfigured) {
+  console.warn('JWT_SECRET is empty or missing; using a temporary generated secret for this process.');
+}
 
 const storageMode = (STORAGE_MODE || (MONGODB_URI ? 'mongodb' : 'json')).toLowerCase();
 
@@ -303,13 +314,17 @@ async function saveAuthSession(userId, req) {
   const token = signToken(userId);
   const session = authSessionForUser(userId, req, token);
 
-  if (storageMode === 'mongodb') {
-    const db = await getMongoDb();
-    await db.collection(MONGO_COLLECTIONS.authSessions).insertOne(convertForMongo(session));
-  } else {
-    const sessions = await readCollection('authSessions');
-    sessions.unshift(session);
-    await writeCollection('authSessions', sessions);
+  try {
+    if (storageMode === 'mongodb') {
+      const db = await getMongoDb();
+      await db.collection(MONGO_COLLECTIONS.authSessions).insertOne(convertForMongo(session));
+    } else {
+      const sessions = await readCollection('authSessions');
+      sessions.unshift(session);
+      await writeCollection('authSessions', sessions);
+    }
+  } catch (err) {
+    console.error('save auth session error', err);
   }
 
   return token;
@@ -484,7 +499,9 @@ app.get(`${API_PREFIX}/health`, (_req, res) => {
     success: true,
     storage: storageMode,
     data_dir: DATA_DIR,
-    mongodb_db: storageMode === 'mongodb' ? MONGODB_DB : null
+    mongodb_db: storageMode === 'mongodb' ? MONGODB_DB : null,
+    jwt_secret_configured: isJwtSecretConfigured,
+    using_generated_jwt_secret: !isJwtSecretConfigured
   });
 });
 
@@ -504,10 +521,9 @@ app.post(`${API_PREFIX}/auth/login`, async (req, res) => {
       return res.status(400).json({ success: false, message: 'email and password are required' });
     }
 
-    const [users, accounts, sessions] = await Promise.all([
+    const [users, accounts] = await Promise.all([
       readCollection('users'),
-      readCollection('authAccounts'),
-      readCollection('authSessions')
+      readCollection('authAccounts')
     ]);
 
     const account = accounts.find((a) => {
@@ -528,24 +544,21 @@ app.post(`${API_PREFIX}/auth/login`, async (req, res) => {
     }
 
     account.last_login_at = nowIso();
-    const token = signToken(user._id);
-    sessions.unshift({
-      _id: ref(newId()),
-      user_id: ref(user._id),
-      refresh_token_hash: crypto.createHash('sha256').update(token).digest('hex'),
-      device_name: req.headers['user-agent'] || 'Browser',
-      ip_address: req.ip,
-      user_agent: req.headers['user-agent'] || '',
-      created_at: nowIso(),
-      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-      revoked_at: null,
-      is_active: true
-    });
+    const token = await saveAuthSession(user._id, req);
 
-    await Promise.all([
-      writeCollection('authAccounts', accounts),
-      writeCollection('authSessions', sessions)
-    ]);
+    try {
+      if (storageMode === 'mongodb') {
+        const db = await getMongoDb();
+        await db.collection(MONGO_COLLECTIONS.authAccounts).updateOne(
+          { _id: convertForMongo(account._id) },
+          { $set: { last_login_at: account.last_login_at } }
+        );
+      } else {
+        await writeCollection('authAccounts', accounts);
+      }
+    } catch (err) {
+      console.error('last login update error', err);
+    }
 
     res.json({ success: true, message: 'Logged in', token, user: await buildUser(user) });
   } catch (err) {
@@ -800,7 +813,7 @@ app.post(`${API_PREFIX}/auth/signup`, async (req, res) => {
       ]);
     }
 
-    const token = signToken(userId);
+    const token = await saveAuthSession(userId, req);
     res.json({ success: true, message: 'Account created', token, user: await buildUser(user) });
   } catch (err) {
     console.error('signup error', err);
