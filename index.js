@@ -136,8 +136,6 @@ function buildCard(pin) {
   img.src = pin.image_url;
   img.alt = pin.title || 'Pin';
   img.loading = 'lazy';
-  img.style.minHeight = `${Math.max(Number(pin.image_height) || 420, 240)}px`;
-  img.style.objectFit = 'cover';
   img.onerror = () => {
     img.src = `https://picsum.photos/seed/${encodeURIComponent(pin.id)}/500/650`;
   };
