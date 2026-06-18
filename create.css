@@ -126,7 +126,7 @@ textarea {
 }
 
 .header {
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: var(--side);
   right: 0;
@@ -136,7 +136,7 @@ textarea {
   align-items: center;
   padding: 0 32px;
   gap: 16px;
-  z-index: 999;
+  z-index: 999 !important;
   border-bottom: 1px solid #ede8e3;
 }
 
@@ -221,7 +221,7 @@ textarea {
 .main {
   margin-left: var(--side);
   margin-right: auto;
- padding: calc(var(--head) + 40px) 40px 80px;
+  padding-top: calc(var(--head) + 60px) !important;
   display: flex;
   gap: 40px;
   max-width: 1080px;
