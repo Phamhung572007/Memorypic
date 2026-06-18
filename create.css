@@ -131,14 +131,14 @@ textarea {
   left: var(--side);
   right: 0;
   height: var(--head);
-  background: rgba(255, 255, 255, .95);
-  backdrop-filter: blur(12px);
+  background: transparent;
+  backdrop-filter: none;
   display: flex;
   align-items: center;
   padding: 0 32px;
   gap: 16px;
   z-index: 400;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 0;
 }
 
 .header h1 {
