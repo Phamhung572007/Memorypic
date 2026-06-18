@@ -495,7 +495,7 @@ app.post(`${API_PREFIX}/auth/signup`, async (req, res) => {
       updated_at: nowIso()
     };
 
-    accounts.push({
+    const account = {
       _id: ref(accountId),
       user_id: ref(userId),
       provider: 'local',
@@ -508,9 +508,9 @@ app.post(`${API_PREFIX}/auth/signup`, async (req, res) => {
       last_login_at: null,
       password_updated_at: nowIso(),
       created_at: nowIso()
-    });
+    };
 
-    boards.push({
+    const board = {
       _id: ref(newId()),
       user_id: ref(userId),
       name: 'Mac dinh',
@@ -519,21 +519,35 @@ app.post(`${API_PREFIX}/auth/signup`, async (req, res) => {
       is_private: false,
       created_at: nowIso(),
       updated_at: nowIso()
-    });
+    };
 
-    users.push(user);
+    if (storageMode === 'mongodb') {
+      const db = await getMongoDb();
+      await Promise.all([
+        db.collection(MONGO_COLLECTIONS.users).insertOne(convertForMongo(user)),
+        db.collection(MONGO_COLLECTIONS.authAccounts).insertOne(convertForMongo(account)),
+        db.collection(MONGO_COLLECTIONS.boards).insertOne(convertForMongo(board))
+      ]);
+    } else {
+      users.push(user);
+      accounts.push(account);
+      boards.push(board);
 
-    await Promise.all([
-      writeCollection('users', users),
-      writeCollection('authAccounts', accounts),
-      writeCollection('boards', boards)
-    ]);
+      await Promise.all([
+        writeCollection('users', users),
+        writeCollection('authAccounts', accounts),
+        writeCollection('boards', boards)
+      ]);
+    }
 
     const token = signToken(userId);
     res.json({ success: true, message: 'Account created', token, user: await buildUser(user) });
   } catch (err) {
     console.error('signup error', err);
-    res.status(500).json({ success: false, message: 'Server error' });
+    if (err?.code === 11000) {
+      return res.status(409).json({ success: false, message: 'Email này đã được đăng ký' });
+    }
+    res.status(500).json({ success: false, message: 'Không thể tạo tài khoản lúc này' });
   }
 });
 
