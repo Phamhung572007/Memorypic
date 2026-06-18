@@ -126,7 +126,7 @@ textarea {
 }
 
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: var(--side);
   right: 0;
