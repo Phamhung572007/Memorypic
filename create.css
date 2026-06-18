@@ -469,6 +469,11 @@ textarea {
   border-bottom: 2px solid var(--border);
   border-radius: 0;
   scroll-margin-top: calc(var(--head) + 24px);
+  display: block;
+  width: 100%;
+  min-height: 60px;
+  color: #111 !important;
+  background: #fff8dc !important;
 }
 
 #pinTitle:focus {
