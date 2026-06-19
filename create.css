@@ -223,11 +223,10 @@ textarea {
 .main {
   margin-left: var(--side);
   margin-right: auto;
-  padding: 48px 32px 60px;
-  display: flex;
-  gap: 40px;
-  max-width: 1080px;
-  align-items: flex-start;
+  padding-top: 120px;
+  padding-right: 32px;
+  padding-bottom: 60px;
+  padding-left: 32px;
 }
 
 .main.board-mode {
