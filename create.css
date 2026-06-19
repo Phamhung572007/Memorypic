@@ -126,7 +126,7 @@ textarea {
 }
 
 .header {
-  position: fixed !important;
+  position: fixed;
   top: 16px;
   left: auto;
   right: 24px;
@@ -136,7 +136,7 @@ textarea {
   align-items: center;
   padding: 0;
   gap: 10px;
-  z-index: 999 !important;
+  z-index: 999;
   border-bottom: none;
 }
 
