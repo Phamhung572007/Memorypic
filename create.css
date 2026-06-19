@@ -127,27 +127,28 @@ textarea {
 
 .header {
   position: fixed !important;
-  top: 0;
-  left: var(--side);
-  right: 0;
-  height: var(--head);
-  background: #fdf9f6;
+  top: 16px;
+  left: auto;
+  right: 24px;
+  height: auto;
+  background: transparent;
   display: flex;
   align-items: center;
-  padding: 0 32px;
-  gap: 16px;
+  padding: 0;
+  gap: 10px;
   z-index: 999 !important;
-  border-bottom: 1px solid #ede8e3;
+  border-bottom: none;
 }
 
 .header h1 {
+  display: none;
   font-family: var(--hf);
   font-size: 20px;
   min-width: 92px;
 }
 
 .header-tabs {
-  display: flex;
+  display: none;
   gap: 4px;
   padding: 4px;
   border-radius: 22px;
@@ -173,6 +174,7 @@ textarea {
 }
 
 .header-sp {
+  display: none;
   flex: 1;
 }
 
@@ -221,7 +223,7 @@ textarea {
 .main {
   margin-left: var(--side);
   margin-right: auto;
-  padding: calc(var(--head) + 96px) 32px 60px;
+  padding: 48px 32px 60px;
   display: flex;
   gap: 40px;
   max-width: 1080px;
@@ -822,8 +824,9 @@ textarea {
 
 @media (max-width: 900px) {
   .header {
-    left: 0;
-    padding: 0 20px;
+    left: auto;
+    right: 20px;
+    padding: 0;
   }
 
   .header h1 {
@@ -833,7 +836,7 @@ textarea {
   .main {
     margin-left: 0;
     flex-direction: column;
-    padding: calc(var(--head) + 110px) 24px 60px;
+    padding: 88px 24px 60px;
     gap: 28px;
   }
 
@@ -857,15 +860,14 @@ textarea {
 @media (max-width: 640px) {
   .header {
     gap: 10px;
-    padding: 0 14px;
+    left: 16px;
+    right: 16px;
+    justify-content: flex-end;
+    padding: 0;
   }
 
   .header h1 {
     display: none;
-  }
-
-  .header-tabs {
-    display: flex;
   }
 
   .htab {
