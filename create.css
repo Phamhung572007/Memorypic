@@ -221,7 +221,7 @@ textarea {
 .main {
   margin-left: var(--side);
   margin-right: auto;
-  padding-top: calc(var(--head) + 60px) !important;
+  padding: calc(var(--head) + 96px) 32px 60px;
   display: flex;
   gap: 40px;
   max-width: 1080px;
@@ -821,17 +821,6 @@ textarea {
 }
 
 @media (max-width: 900px) {
-  .main {
-    margin-left: 0;
-    flex-direction: column;
-    /* Tăng khoảng cách cho màn hình nhỏ */
-    padding-top: calc(var(--head) + 100px) !important; 
-    padding-left: 24px;
-    padding-right: 24px;
-    gap: 28px;
-  }
-}
-
   .header {
     left: 0;
     padding: 0 20px;
@@ -844,7 +833,7 @@ textarea {
   .main {
     margin-left: 0;
     flex-direction: column;
-    padding: calc(var(--head) + 96px) 24px 60px;
+    padding: calc(var(--head) + 110px) 24px 60px;
     gap: 28px;
   }
 
@@ -864,8 +853,7 @@ textarea {
   .success-screen {
     margin-left: 0;
   }
-
-
+}
 @media (max-width: 640px) {
   .header {
     gap: 10px;
